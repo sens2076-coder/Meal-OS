@@ -1,3 +1,24 @@
+:root {
+    --bg-color: #f0f2f5;
+    --container-bg: #fff;
+    --text-color: #333;
+    --heading-color: #e63946;
+    --display-bg: #f8f9fa;
+    --display-border: #ccc;
+    --btn-bg: #457b9d;
+    --btn-hover: #1d3557;
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --container-bg: #1e1e1e;
+    --text-color: #e0e0e0;
+    --heading-color: #ff4d4d;
+    --display-bg: #2d2d2d;
+    --display-border: #444;
+    --btn-bg: #345e77;
+    --btn-hover: #5a91b1;
+}
 
 @keyframes spin {
     0% { transform: rotateY(0deg); opacity: 0.5; }
@@ -20,24 +41,46 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #f0f2f5;
-    color: #333;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
+    position: relative;
     text-align: center;
-    background: #fff;
+    background: var(--container-bg);
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     width: 90%;
     max-width: 400px;
+    transition: background-color 0.3s ease;
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+#theme-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    padding: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+#theme-btn:hover {
+    transform: scale(1.1);
 }
 
 h1 {
     font-size: 2.5rem;
     margin-bottom: 20px;
-    color: #e63946;
+    color: var(--heading-color);
 }
 
 #food-display {
@@ -45,14 +88,15 @@ h1 {
     font-weight: bold;
     margin-bottom: 30px;
     padding: 20px;
-    background-color: #f8f9fa;
+    background-color: var(--display-bg);
     border-radius: 8px;
-    border: 2px dashed #ccc;
+    border: 2px dashed var(--display-border);
     min-height: 50px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-button {
-    background-color: #457b9d;
+#pick-food {
+    background-color: var(--btn-bg);
     color: white;
     border: none;
     padding: 15px 30px;
@@ -62,17 +106,17 @@ button {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-button:hover {
-    background-color: #1d3557;
+#pick-food:hover {
+    background-color: var(--btn-hover);
     transform: translateY(-2px);
 }
 
-button:active {
+#pick-food:active {
     transform: translateY(0);
 }
 
-button:disabled {
-    background-color: #a5a5a5;
+#pick-food:disabled {
+    background-color: #666;
     cursor: not-allowed;
     transform: none;
 }

@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEOTECH | Smart Industrial Control</title>
+<title>NEOTECH | PLC & HMI Engineering Expert</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
+<header id="header">
     <div class="logo">NEOTECH</div>
     <nav>
         <a href="company.html">Company</a>
@@ -20,14 +20,14 @@
 </header>
 
 <section class="hero">
-    <div class="overlay"></div>
-
     <div class="hero-content">
-        <h1>PLC & HMI<br><span>EXPERT SOLUTIONS</span></h1>
-        <p>코오롱인더스트리 등 대기업 협력 기반의 검증된 자동화 기술력</p>
-        <a href="company.html" class="btn">기술 역량 확인</a>
+        <h1 class="reveal">PLC & HMI<span>EXPERT SOLUTIONS</span></h1>
+        <p class="reveal">LS Electric · Mitsubishi 기반 대기업 생산라인 자동화 전담 엔지니어링</p>
+        <div class="reveal">
+            <a href="services.html" class="btn">서비스 상세 보기</a>
+        </div>
 
-        <div class="icon-wrap">
+        <div class="icon-wrap reveal">
             <div class="icon-box">
                 <div class="icon-circle">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -36,7 +36,7 @@
                         <path d="M7 13h2m3 0h5M7 17h10"/>
                     </svg>
                 </div>
-                <span>PLC Control</span>
+                <span>LS / Mitsubishi PLC</span>
             </div>
 
             <div class="icon-box">
@@ -47,7 +47,7 @@
                         <circle cx="18" cy="14" r="1"/>
                     </svg>
                 </div>
-                <span>HMI Design</span>
+                <span>HMI Optimization</span>
             </div>
 
             <div class="icon-box">
@@ -56,7 +56,7 @@
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                     </svg>
                 </div>
-                <span>Reliability</span>
+                <span>High Reliability</span>
             </div>
 
             <div class="icon-box">
@@ -67,33 +67,58 @@
                         <polyline points="17 11 19 13 23 9"/>
                     </svg>
                 </div>
-                <span>Partnership</span>
+                <span>Strategic Partner</span>
             </div>
         </div>
     </div>
 </section>
 
-<section class="about reveal">
-    <h2>Proven Expertise</h2>
-    <p>네오테크는 코오롱인더스트리의 핵심 생산 라인 자동제어를 담당하며<br>수년간 쌓아온 데이터와 신뢰를 바탕으로 최적의 PLC/HMI 솔루션을 제공합니다.</p>
+<section class="content reveal">
+    <div class="container" style="text-align: center;">
+        <h2 class="section-title">Core Engineering</h2>
+        <p style="color: var(--text-muted); max-width: 800px; margin: 0 auto 60px;">
+            네오테크는 코오롱인더스트리와의 십수 년에 걸친 파트너십을 통해 검증된 기술력을 보유하고 있습니다. 
+            LS Electric XGT 시리즈와 Mitsubishi iQ-R 시리즈 등 주력 하드웨어에 대한 깊은 이해를 바탕으로 
+            현장의 생산성을 극대화하는 최적의 제어 알고리즘을 설계합니다.
+        </p>
+        
+        <div class="grid-3">
+            <div class="card">
+                <h3>LS Electric Expert</h3>
+                <p>XGT, XGK 등 LS 산전 PLC 전 시리즈에 대한 고도화된 프로그래밍 및 유지보수 솔루션을 제공합니다.</p>
+            </div>
+            <div class="card">
+                <h3>Mitsubishi Specialist</h3>
+                <p>MELSEC-Q/iQ-R 시리즈 기반의 정밀 모션 제어 및 대규모 네트워크 시스템 구축 노하우를 보유하고 있습니다.</p>
+            </div>
+            <div class="card">
+                <h3>User-Centric HMI</h3>
+                <p>현장 작업자의 편의성을 최우선으로 고려한 직관적인 UI/UX 설계로 공정 효율을 개선합니다.</p>
+            </div>
+        </div>
+    </div>
 </section>
 
 <footer>
     <div class="container footer-content">
         <div>
-            <strong>네오테크 (Neotech)</strong><br>
-            산업 자동제어 및 제어반 제작 전문 기업
+            <strong>네오테크 (Neotech)</strong>
+            <div class="footer-info">
+                산업 자동제어 및 제어반 제작 전문 기업<br>
+                대표: 차종만
+            </div>
         </div>
         <div>
-            대표: 차종만<br>
-            주소: 대구광역시 달서구 갈산동 358-111<br>
-            비전지식산업센터 119호<br>
-            T. 053-583-8649<br>
-            E. gamilro71@hanmail.net
+            <strong>Contact Info</strong>
+            <div class="footer-info">
+                대구광역시 달서구 갈산동 358-111 비전지식산업센터 119호<br>
+                T. 053-583-8649<br>
+                E. gamilro71@hanmail.net
+            </div>
         </div>
     </div>
     <div class="footer-bottom">
-        © 2024 네오테크. All Rights Reserved.
+        &copy; 2024 네오테크. All Rights Reserved.
     </div>
 </footer>
 

@@ -13,12 +13,54 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
     background: var(--bg-dark);
     color: #f8fafc;
-    line-height: 1.6;
+    line-height: 1.7; /* Slightly more breathable line height */
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased; /* Sharper fonts on Mac */
+}
+
+/* Updated List Styles */
+ul.tech-list {
+    list-style: none;
+    padding: 0;
+}
+
+ul.tech-list li {
+    margin-bottom: 12px;
+    padding-left: 28px;
+    position: relative;
+    color: var(--text-muted);
+    font-size: 15px;
+}
+
+ul.tech-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--main-color);
+    font-weight: 800;
+}
+
+/* Refined Badge/Tag Style */
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    color: var(--main-color);
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* HEADER */

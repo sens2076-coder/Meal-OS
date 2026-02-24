@@ -5,6 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Company | NEOTECH</title>
 <link rel="stylesheet" href="style.css">
+<style>
+    .info-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 40px;
+    }
+    .info-table th, .info-table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .info-table th {
+        width: 150px;
+        color: var(--main-color);
+        font-weight: 600;
+    }
+    .info-table td {
+        color: var(--text-muted);
+    }
+</style>
 </head>
 <body>
 
@@ -20,30 +40,62 @@
 </header>
 
 <section class="sub-hero">
-    <h1>Company</h1>
+    <div class="badge">About Us</div>
+    <h1>Company Profile</h1>
     <p>Engineering Excellence in Industrial Automation</p>
 </section>
 
 <section class="content reveal">
     <div class="container">
-        <h2>회사 개요</h2>
+        <h2 class="section-title">회사 개요</h2>
         <p>
             NEOTECH는 PLC 및 HMI 전문 엔지니어링 기업입니다. 
             특히 <strong>코오롱인더스트리</strong>와 같은 대기업 생산 라인의 자동화 시스템을 90% 이상 전담하며, 
             가장 까다로운 산업 현장에서도 중단 없는 고신뢰성 제어 솔루션을 제공하고 있습니다.
         </p>
+
+        <table class="info-table">
+            <tr>
+                <th>회사명</th>
+                <td>네오테크 (NEOTECH)</td>
+            </tr>
+            <tr>
+                <th>대표자</th>
+                <td>차종만</td>
+            </tr>
+            <tr>
+                <th>주력 분야</th>
+                <td>산업용 PLC 제어, HMI/SCADA 설계, 제어반(MCC) 제작</td>
+            </tr>
+            <tr>
+                <th>주요 고객사</th>
+                <td>코오롱인더스트리 (핵심 협력사)</td>
+            </tr>
+            <tr>
+                <th>소재지</th>
+                <td>대구광역시 달서구 갈산동 358-111 비전지식산업센터 119호</td>
+            </tr>
+        </table>
     </div>
 </section>
 
 <section class="content alt reveal">
     <div class="container two-col">
         <div>
-            <h2>Vision</h2>
-            <p>스마트 산업 자동화 분야의 선도 기업</p>
+            <h2 class="section-title">Vision</h2>
+            <p style="color: var(--text-muted);">
+                우리는 단순한 제어 시스템 구축을 넘어, 
+                현장의 데이터를 가치 있는 정보로 변환하고 
+                스마트 팩토리 구현을 위한 최적의 기술적 교두보 역할을 수행합니다.
+            </p>
         </div>
         <div>
-            <h2>Mission</h2>
-            <p>정밀 제어 기술로 고객 경쟁력을 향상</p>
+            <h2 class="section-title">Mission</h2>
+            <p style="color: var(--text-muted);">
+                정밀 제어 기술과 축적된 현장 노하우를 바탕으로 
+                고객사의 생산 가용성을 극대화하고 
+                지속 가능한 제조 경쟁력을 지원합니다.
+            </p>
         </div>
     </div>
 </section>
@@ -51,19 +103,23 @@
 <footer>
     <div class="container footer-content">
         <div>
-            <strong>네오테크 (Neotech)</strong><br>
-            산업 자동제어 및 제어반 제작 전문 기업
+            <strong>네오테크 (Neotech)</strong>
+            <div class="footer-info">
+                산업 자동제어 및 제어반 제작 전문 기업<br>
+                대표: 차종만
+            </div>
         </div>
         <div>
-            대표: 차종만<br>
-            주소: 대구광역시 달서구 갈산동 358-111<br>
-            비전지식산업센터 119호<br>
-            T. 053-583-8649<br>
-            E. gamilro71@hanmail.net
+            <strong>Quick Links</strong>
+            <div class="footer-info">
+                <a href="company.html" style="color: inherit; text-decoration: none; display: block;">Company</a>
+                <a href="services.html" style="color: inherit; text-decoration: none; display: block;">Services</a>
+                <a href="tech.html" style="color: inherit; text-decoration: none; display: block;">Technology</a>
+            </div>
         </div>
     </div>
     <div class="footer-bottom">
-        © 2024 네오테크. All Rights Reserved.
+        &copy; 2024 네오테크. All Rights Reserved.
     </div>
 </footer>
 

@@ -71,6 +71,17 @@ body {
     max-width: 400px;
 }
 
+.disqus-section {
+    width: 100%;
+    max-width: 800px;
+    background: var(--container-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+}
+
 .contact-container {
     background: var(--container-bg);
     padding: 30px;

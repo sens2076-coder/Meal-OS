@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://neotech-2t4.pages.dev/</loc>
+    <lastmod>2024-02-24</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://neotech-2t4.pages.dev/company.html</loc>
+    <lastmod>2024-02-24</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://neotech-2t4.pages.dev/services.html</loc>
+    <lastmod>2024-02-24</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://neotech-2t4.pages.dev/tech.html</loc>
+    <lastmod>2024-02-24</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://neotech-2t4.pages.dev/projects.html</loc>
+    <lastmod>2024-02-24</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://neotech-2t4.pages.dev/quality.html</loc>
+    <lastmod>2024-02-24</lastmod>
+    <priority>0.8</priority>
+  </url>
+</urlset>

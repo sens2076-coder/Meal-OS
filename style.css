@@ -182,6 +182,10 @@ header nav a:hover {
     transform:translateY(-5px);
 }
 
+.card .icon-circle {
+    margin-bottom: 20px;
+}
+
 /* FOOTER */
 
 footer{

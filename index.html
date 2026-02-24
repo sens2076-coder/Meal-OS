@@ -1,66 +1,98 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오늘 뭐 먹지?</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEOTECH | Smart Industrial Control</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="wrapper">
-        <div class="container">
-            <div class="theme-toggle">
-                <button id="theme-btn">🌙</button>
-            </div>
-            <h1>오늘 뭐 먹지?</h1>
-            <div id="food-display"></div>
-            <button id="pick-food">골라줘!</button>
-        </div>
 
-        <div class="contact-section">
-            <div class="contact-container">
-                <h2>제휴 문의</h2>
-                <form action="https://formspree.io/f/mrearkge" method="POST">
-                    <div class="input-group">
-                        <label for="name">성함/업체명</label>
-                        <input type="text" id="name" name="name" placeholder="홍길동 / 맛집나라" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="email">이메일 주소</label>
-                        <input type="email" id="email" name="_replyto" placeholder="example@email.com" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="message">문의 내용</label>
-                        <textarea id="message" name="message" rows="4" placeholder="문의하실 내용을 상세히 적어주세요." required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">보내기</button>
-                </form>
-            </div>
-        </div>
+<header>
+    <div class="logo">NEOTECH</div>
+    <nav>
+        <a href="company.html">Company</a>
+        <a href="services.html">Services</a>
+        <a href="tech.html">Technology</a>
+        <a href="projects.html">Projects</a>
+        <a href="quality.html">Quality</a>
+    </nav>
+</header>
 
-        <div class="disqus-section">
-            <div id="disqus_thread"></div>
-            <script>
-                /**
-                *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-                *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-                /*
-                var disqus_config = function () {
-                this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-                this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                };
-                */
-                (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document, s = d.createElement('script');
-                s.src = 'https://productbuilder-raaicrudfo.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-                })();
-            </script>
-            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<section class="hero">
+    <div class="overlay"></div>
+
+    <div class="hero-content">
+        <h1>SMART INDUSTRIAL<br><span>CONTROL SYSTEM</span></h1>
+        <p>MCC · INVERTER · SERVO · PLC 기반 자동화 제어 전문기업</p>
+        <a href="company.html" class="btn">회사소개</a>
+
+        <div class="icon-wrap">
+            <div class="icon-box">
+                <div class="icon-circle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <rect x="3" y="4" width="18" height="16" rx="2"/>
+                        <line x1="3" y1="9" x2="21" y2="9"/>
+                    </svg>
+                </div>
+                <span>MCC</span>
+            </div>
+
+            <div class="icon-box">
+                <div class="icon-circle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <polyline points="4 14 8 10 12 14 16 10 20 14"/>
+                    </svg>
+                </div>
+                <span>INVERTER</span>
+            </div>
+
+            <div class="icon-box">
+                <div class="icon-circle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="5"/>
+                    </svg>
+                </div>
+                <span>SERVO</span>
+            </div>
+
+            <div class="icon-box">
+                <div class="icon-circle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+                    </svg>
+                </div>
+                <span>PLC</span>
+            </div>
         </div>
     </div>
-    <script src="main.js"></script>
+</section>
+
+<section class="about reveal">
+    <h2>About NEOTECH</h2>
+    <p>산업 자동화 제어 시스템 설계 및 제작 전문 기업</p>
+</section>
+
+<footer>
+    <div class="container footer-content">
+        <div>
+            <strong>네오테크 (Neotech)</strong><br>
+            산업 자동제어 및 제어반 제작 전문 기업
+        </div>
+        <div>
+            대표: 차종만<br>
+            주소: 대구광역시 달서구 갈산동 358-111<br>
+            비전지식산업센터 119호<br>
+            T. 053-583-8649<br>
+            E. gamilro71@hanmail.net
+        </div>
+    </div>
+    <div class="footer-bottom">
+        © 2024 네오테크. All Rights Reserved.
+    </div>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>

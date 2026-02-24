@@ -228,11 +228,25 @@ header nav a:hover {
 
 .card {
     background: var(--bg-card);
-    padding: 40px;
+    padding: 0;
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.03);
     transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     height: 100%;
+    overflow: hidden;
+}
+
+.card-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
 }
 
 .card:hover {
@@ -241,15 +255,27 @@ header nav a:hover {
     background: #1a1f29;
 }
 
+.card:hover .card-image img {
+    transform: scale(1.1);
+}
+
 .card h3 {
     font-size: 22px;
-    margin-bottom: 15px;
+    margin: 25px 30px 15px;
     color: #fff;
 }
 
 .card p {
     color: var(--text-muted);
     font-size: 15px;
+    padding: 0 30px 30px;
+}
+
+.card .icon-circle {
+    margin: -35px 30px 0;
+    position: relative;
+    z-index: 2;
+    background: var(--bg-card);
 }
 
 /* REVEAL ANIMATION */

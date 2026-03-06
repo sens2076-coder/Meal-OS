@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>오늘의 이유식 - 밀프랩</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <script src="js/storage.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/app.js" defer></script>
+  
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="logo-container flex-center gap-10">
+        <img src="assets/logo.svg" alt="로고">
+      </div>
+      <nav class="nav-pc">
+        <a href="dashboard.html">대시보드</a>
+        <a href="recipe.html">레시피</a>
+        <a href="shopping.html">장보기</a>
+        <a href="nutrition.html">영양분석</a>
+        <a href="milprep.html">밀프랩</a>
+        <a href="settings.html">설정</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container ">
+    <h2 class="mb-20 text-center">밀프랩 보드</h2>
+        <div class="card mb-20">
+            <h3 class="mb-20">이번 주 밀프랩 현황</h3>
+            <table style="width:100%;text-align:left;border-collapse:collapse;">
+                <tr style="border-bottom:2px solid var(--color-stone);">
+                    <th style="padding:10px 0;">메뉴</th><th>수량</th><th>상태</th>
+                </tr>
+                <tr style="border-bottom:1px solid #eee;">
+                    <td style="padding:10px 0;">소불고기</td><td>14포</td><td>이번주+이월</td>
+                </tr>
+            </table>
+        </div>
+        <div class="card">
+            <h3 class="mb-20">개인 선호 메뉴 관리</h3>
+            <button class="btn-secondary">+ 새 메뉴 추가</button>
+        </div>
+  </main>
+  <nav class="nav-mobile">
+    <a href="index.html"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>홈</a>
+    <a href="dashboard.html"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>식단</a>
+    <a href="shopping.html"><svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>장보기</a>
+    <a href="baby-food.html"><svg viewBox="0 0 24 24"><path d="M12 2C8.69 2 6 4.69 6 8c0 2.21 1.2 4.14 3 5.19V17c0 1.1.9 2 2 2h2c1.1 0 2-.9 2-2v-3.81c1.8-1.05 3-2.98 3-5.19 0-3.31-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg>이유식</a>
+    <a href="settings.html"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.56-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.3-.06.62-.06.94s.02.64.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .43-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>설정</a>
+  </nav>
+</body>
+</html>

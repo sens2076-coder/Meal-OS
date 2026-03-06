@@ -1,0 +1,35 @@
+
+{
+  "meal_prep_pool": {
+    "minced_beef": ["두부완자", "채소완자", "시금치완자", "감자조림", "무조림", "두부조림", "애호박볶음", "콜리플라워볶음"],
+    "soup_stock": ["뭇국", "미역국", "감자국", "무찜", "양배추찜", "브로콜리찜"],
+    "sliced_beef": ["소불고기", "숙주볶음", "파프리카볶음", "버섯볶음"]
+  },
+  "side_dish_pool": {
+    "leafy_greens": [
+      {"name": "시금치나물", "baby_food_tag": true},
+      {"name": "청경채볶음", "baby_food_tag": false},
+      {"name": "오이무침", "baby_food_tag": false},
+      {"name": "깻잎나물", "baby_food_tag": false},
+      {"name": "양배추볶음", "baby_food_tag": false}
+    ],
+    "sticks": [
+      {"name": "브로콜리찜", "baby_food_tag": true},
+      {"name": "파프리카(생)", "baby_food_tag": false},
+      {"name": "비트(생/찜)", "baby_food_tag": true},
+      {"name": "당근(생)", "baby_food_tag": false},
+      {"name": "오이(생)", "baby_food_tag": false}
+    ],
+    "other_veggies": [
+      {"name": "애호박찜", "baby_food_tag": true},
+      {"name": "애호박구이", "baby_food_tag": false},
+      {"name": "연근조림", "baby_food_tag": false},
+      {"name": "감자조림", "baby_food_tag": false},
+      {"name": "멸치볶음(오메가3)", "baby_food_tag": false}
+    ]
+  },
+  "personal_preference_pool": {
+    "F01": "소고기 라구 소스",
+    "F02": "나또 비빔밥"
+  }
+}

@@ -1,0 +1,8 @@
+:root {
+  --color-forest: #1B4332; --color-sage: #40916C; --color-leaf: #52B788;
+  --color-mint: #D8F3DC; --color-ocean: #1A374D; --color-sky: #B4D4EE;
+  --color-amber: #E76F51; --color-gold: #F4A261; --color-lemon: #FFFACD;
+  --color-cream: #FEFAE0; --color-paper: #F7F3E3; --color-lavender: #7B5EA7;
+  --color-white: #FFFFFF; --color-dark: #2D2D2D; --color-stone: #6B7280;
+  --font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+}

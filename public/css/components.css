@@ -1,15 +1,58 @@
-h1{font-size:2.5rem;font-weight:900;color:var(--color-forest)}
-h2{font-size:1.8rem;font-weight:700;color:var(--color-forest)}
-h3{font-size:1.3rem;font-weight:700;color:var(--color-dark)}
-.caption{font-size:0.85rem;color:var(--color-stone)}
-.btn-primary{background:var(--color-sage);color:var(--color-white);border-radius:12px;padding:14px 28px;font-weight:700;transition:0.25s}
-.btn-primary:hover{filter:brightness(1.1);transform:translateY(-2px)}
-.btn-secondary{border:2px solid var(--color-sage);color:var(--color-sage);border-radius:12px;padding:12px 26px;font-weight:700;transition:0.25s}
-.btn-secondary:hover{filter:brightness(1.1);transform:translateY(-2px)}
-.btn-danger{background:var(--color-amber);color:var(--color-white);border-radius:12px;padding:14px 28px;font-weight:700;transition:0.25s}
-.card{background:var(--color-white);border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,0.08);padding:20px;transition:0.25s}
-.card:hover{box-shadow:0 4px 24px rgba(0,0,0,0.12);transform:translateY(-4px)}
-.badge-mint{background:var(--color-mint);color:var(--color-forest);padding:4px 8px;border-radius:8px;font-size:0.85rem;font-weight:700;}
-.badge-sky{background:var(--color-sky);color:var(--color-ocean);padding:4px 8px;border-radius:8px;font-size:0.85rem;font-weight:700;}
-.badge-lemon{background:var(--color-lemon);color:var(--color-dark);padding:4px 8px;border-radius:8px;font-size:0.85rem;font-weight:700;}
-.badge-lavender{background:var(--color-lavender);color:var(--color-white);padding:4px 8px;border-radius:8px;font-size:0.85rem;font-weight:700;}
+/* ===== public/css/components.css ===== */
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary {
+  background-color: var(--color-sage);
+  color: var(--color-white);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-sage);
+  border: 1px solid var(--color-sage);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-mint);
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+  background-color: var(--color-amber);
+  color: var(--color-white);
+}
+
+.btn-danger:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+}
+
+
+/* Cards */
+.card {
+  background-color: var(--color-white);
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  padding: 20px;
+  transition: all 0.25s ease-out;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+}

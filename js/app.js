@@ -1,15 +1,16 @@
 /* js/app.js */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const startBtn = document.getElementById('start-btn');
     const inputSection = document.getElementById('input-section');
     const tarotTable = document.getElementById('tarot-table');
     const userQuery = document.getElementById('user-query');
     const responseContainer = document.getElementById('ai-response');
     const responseText = document.getElementById('response-text');
     const selectedCardsDiv = document.getElementById('selected-cards');
+    
+    const mode3Btn = document.getElementById('mode-3-cards');
+    const mode10Btn = document.getElementById('mode-10-cards');
 
-    // 메이저 아르카나 카드 정보 (이름과 이미지 매칭)
     const majorArcana = [
         { name: "바보 (The Fool)", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg" },
         { name: "마법사 (The Magician)", img: "https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg" },
@@ -35,29 +36,50 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "세계 (The World)", img: "https://upload.wikimedia.org/wikipedia/commons/f/ff/RWS_Tarot_21_World.jpg" }
     ];
 
-    startBtn.addEventListener('click', async () => {
+    const handleModeSelection = (count) => {
         const query = userQuery.value.trim();
         if (!query) {
             alert("고민을 먼저 말씀해 주세요, 당신의 이야기를 듣고 싶어요. ✨");
             return;
         }
 
+        if (count === 10) {
+            // 프리미엄 결제 유도 로직 (MVP에서는 안내창으로 대체)
+            if (!confirm("💎 심층 10장 뽑기는 프리미엄 서비스입니다.\n루나의 정교한 분석을 위해 복채(결제)가 필요해요. 계속할까요?")) {
+                return;
+            }
+        }
+
         inputSection.classList.add('hidden');
         tarotTable.classList.remove('hidden');
         tarotTable.classList.add('fade-in');
 
-        const randomIndex = Math.floor(Math.random() * majorArcana.length);
-        const drawnCard = majorArcana[randomIndex];
+        startReading(query, count);
+    };
 
-        // 카드 이미지와 이름 출력
-        selectedCardsDiv.innerHTML = `
-            <div class="card-item fade-in">
-                <div class="card-frame">
-                    <img src="${drawnCard.img}" alt="${drawnCard.name}" class="tarot-card-img">
+    mode3Btn.addEventListener('click', () => handleModeSelection(3));
+    mode10Btn.addEventListener('click', () => handleModeSelection(10));
+
+    async function startReading(query, count) {
+        // 무작위 중복 없는 카드 뽑기
+        const shuffled = [...majorArcana].sort(() => 0.5 - Math.random());
+        const selectedCards = shuffled.slice(0, count);
+
+        selectedCardsDiv.innerHTML = '';
+        selectedCardsDiv.className = count === 10 ? 'cards-display grid-10' : 'cards-display flex-3';
+
+        selectedCards.forEach((card, index) => {
+            const cardEl = document.createElement('div');
+            cardEl.className = 'card-item fade-in';
+            cardEl.style.animationDelay = `${index * 0.2}s`;
+            cardEl.innerHTML = `
+                <div class="card-frame mini">
+                    <img src="${card.img}" alt="${card.name}" class="tarot-card-img">
                 </div>
-                <div class="card-name-label">${drawnCard.name}</div>
-            </div>
-        `;
+                <div class="card-name-label mini">${card.name}</div>
+            `;
+            selectedCardsDiv.appendChild(cardEl);
+        });
 
         responseContainer.classList.remove('hidden');
         const loadingSpinner = document.querySelector('.loading-spinner');
@@ -65,13 +87,16 @@ document.addEventListener('DOMContentLoaded', () => {
         responseText.innerHTML = '';
 
         try {
-            // 실제 배포 시 Firebase Function URL로 교체 (예: https://us-central1-your-project.cloudfunctions.net/getTarotReading)
-            const apiUrl = "/api/getTarotReading"; // 또는 전체 URL
-
+            // 실제 배포 시 Firebase Function URL 사용
+            const apiUrl = "/api/getTarotReading";
             const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userQuery: query, selectedCards: [drawnCard.name] })
+                body: JSON.stringify({ 
+                    userQuery: query, 
+                    selectedCards: selectedCards.map(c => c.name),
+                    mode: count === 10 ? 'premium' : 'free'
+                })
             });
 
             if (!response.ok) throw new Error('Network response was not ok');
@@ -82,17 +107,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error('Error:', error);
-            // 에러 시 시뮬레이션 응답으로 대체 (테스트용)
             setTimeout(() => {
                 loadingSpinner.style.display = 'none';
                 responseText.innerHTML = `
                     <div class="result-message fade-in">
-                        <h3>"별들이 속삭이고 있어요..."</h3>
-                        <p>죄송해요, 루나의 통신이 별자리 너머로 잠시 멀어졌나 봐요.</p>
-                        <p>하지만 당신이 뽑은 <strong>[${drawnCard.name}]</strong> 카드는 분명 당신에게 긍정적인 신호를 보내고 있답니다. 잠시 후 다시 루나를 찾아주세요. ✨</p>
+                        <h3>"별들이 당신의 미래를 준비하고 있어요..."</h3>
+                        <p>루나가 당신을 위해 <strong>${count}장의 카드</strong>를 정성껏 뽑았습니다.</p>
+                        <p>현재 AI 엔진 연결이 지연되고 있지만, 당신이 뽑은 카드들의 에너지는 이미 당신의 주변을 감싸고 있어요. 잠시 후 다시 루나를 찾아주시면 더 깊은 해석을 드릴게요. ✨</p>
                     </div>
                 `;
-            }, 2000);
+            }, 3000);
         }
-    });
+    }
 });

@@ -86,8 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingSpinner.style.display = 'block';
         responseText.innerHTML = '';
 
-        try {
-            // 실제 배포 시 Firebase Function URL 사용
+            // 실제 Cloudflare Pages Functions 엔드포인트 호출
             const apiUrl = "/api/getTarotReading";
             const response = await fetch(apiUrl, {
                 method: 'POST',

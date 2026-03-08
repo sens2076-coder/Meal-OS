@@ -3,12 +3,10 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const fs = require("fs");
 const path = require("path");
 
-// Gemini API 설정 (실제 배포 시 환경 변수에서 가져와야 함)
-const genAI = new GoogleGenerativeAI("YOUR_GEMINI_API_KEY"); 
+// 환경변수에서 API 키를 가져옵니다. (MVP용 임시 방어 코드 추가)
+const apiKey = process.env.GEMINI_API_KEY || "YOUR_GEMINI_API_KEY";
+const genAI = new GoogleGenerativeAI(apiKey); 
 
-/**
- * SSOT 마크다운 데이터를 읽어오는 함수
- */
 function getSSOTData() {
     try {
         const tarotDb = fs.readFileSync(path.join(__dirname, "../data/tarot_db.md"), "utf8");
@@ -20,14 +18,14 @@ function getSSOTData() {
     }
 }
 
-/**
- * 타로 해석 결과를 생성하는 메인 로직
- */
 async function generateTarotReading(userQuery, selectedCards) {
+    if (apiKey === "YOUR_GEMINI_API_KEY") {
+        return "✨ (MVP 모드) 현재 AI API 키가 설정되지 않았습니다. 백엔드에서 마크다운 파싱은 정상적으로 이루어지고 있습니다. 뽑으신 카드는 [" + selectedCards.join(", ") + "] 입니다.";
+    }
+
     const { tarotDb, aiPersona } = getSSOTData();
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-    // 프롬프트 조립 (SSOT 결합)
     const prompt = `
         ${aiPersona}
 
@@ -39,7 +37,6 @@ async function generateTarotReading(userQuery, selectedCards) {
         사용자가 뽑은 카드: [${selectedCards.join(", ")}]
 
         루나의 페르소나를 유지하면서, 위 카드들의 상징과 의미를 바탕으로 따뜻하고 정성스러운 타로 해석을 작성해 주세요.
-        응답은 반드시 한국어로 작성해 주세요.
     `;
 
     try {

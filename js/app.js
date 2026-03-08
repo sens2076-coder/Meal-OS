@@ -106,16 +106,34 @@ document.addEventListener('DOMContentLoaded', () => {
             responseText.innerHTML = `<div class="result-message fade-in">${data.reading}</div>`;
 
         } catch (error) {
-            console.error('Error:', error);
+            console.warn('API call failed, switching to Simulation Mode ✨');
+            
+            // 시뮬레이션 응답 생성 (3장 vs 10장 대응)
             setTimeout(() => {
                 loadingSpinner.style.display = 'none';
-                responseText.innerHTML = `
-                    <div class="result-message fade-in">
-                        <h3>"별들이 당신의 미래를 준비하고 있어요..."</h3>
-                        <p>루나가 당신을 위해 <strong>${count}장의 카드</strong>를 정성껏 뽑았습니다.</p>
-                        <p>현재 AI 엔진 연결이 지연되고 있지만, 당신이 뽑은 카드들의 에너지는 이미 당신의 주변을 감싸고 있어요. 잠시 후 다시 루나를 찾아주시면 더 깊은 해석을 드릴게요. ✨</p>
-                    </div>
-                `;
+                
+                let simulatedResult = "";
+                if (count === 3) {
+                    simulatedResult = `
+                        <div class="result-message fade-in">
+                            <h3>"세 장의 카드가 당신의 흐름을 속삭이네요..."</h3>
+                            <p>당신의 고민인 <strong>'${query}'</strong>에 대해 루나가 카드를 읽어보았어요.</p>
+                            <p>첫 번째 카드는 <strong>과거</strong>를, 두 번째 카드는 <strong>현재</strong>를, 세 번째 카드는 당신의 <strong>미래</strong>를 비추고 있답니다.</p>
+                            <p>이 흐름은 마치 맑은 개울물이 바다로 흘러가듯 자연스러워요. 루나가 드리는 오늘의 조언은, <strong>'작은 변화를 두려워하지 말고 흐름에 몸을 맡겨보는 것'</strong>이에요. ✨</p>
+                        </div>
+                    `;
+                } else {
+                    simulatedResult = `
+                        <div class="result-message fade-in">
+                            <h3>💎 "루나의 프리미엄 심층 분석이 도착했습니다"</h3>
+                            <p>당신의 깊은 고민 <strong>'${query}'</strong>에 대해 켈틱 크로스 배열로 10장의 카드를 꼼꼼히 살펴보았어요.</p>
+                            <p>지금 당신을 가로막고 있는 장애물은 사실 당신을 더 강하게 만들기 위한 디딤돌일 뿐이네요. 당신의 잠재의식 속에는 이미 정답이 들어있답니다.</p>
+                            <p><strong>최종 결과:</strong> 당신의 정성이 별들에게 닿아, 머지않아 밝은 태양이 뜨는 것과 같은 기쁜 소식이 찾아올 거예요. 루나가 당신의 앞길을 온 마음 다해 축복할게요. 🔮✨</p>
+                            <br><small>(* 현재 시뮬레이션 모드입니다. 실제 AI 연결 시 더 정교한 개별 카드 해석이 제공됩니다.)</small>
+                        </div>
+                    `;
+                }
+                responseText.innerHTML = simulatedResult;
             }, 3000);
         }
     }

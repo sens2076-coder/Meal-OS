@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>오늘의 이유식 (MEAL OS) - 매일의 한 끼가 아이의 내일을 만듭니다</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <style>
+    .upload-area {
+      border: 2px dashed var(--brand-mint);
+      border-radius: 16px;
+      padding: 48px;
+      text-align: center;
+      transition: var(--transition-fast);
+      cursor: pointer;
+    }
+    .upload-area.dragover {
+      background: var(--brand-mint);
+      border-style: solid;
+      border-color: var(--brand-sage);
+    }
+    .preview-img {
+      max-width: 200px;
+      margin: 20px auto;
+      border-radius: 8px;
+      display: none;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 32px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">
+        <svg viewBox="0 0 180 48" width="180" height="48">
+          <path d="M20,10 C10,12 8,20 6,26 L8,27 L9,24 C10,24 11,24 12,24 C15,24 18,22 20,18 C21,15 23,13 25,12 L24,10 C22,11 21,12 20,13 C19,10 16,8 12,8" fill="#1B4332"/>
+          <text x="35" y="32" font-family="Playfair Display" font-weight="700" font-size="22" fill="#1B4332">MEAL OS</text>
+        </svg>
+      </div>
+      <a href="#" id="settingsBtn" style="color: var(--brand-stone);">설정</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-content animate-fadeInUp">
+      <span class="badge badge-gold">✨ AI 기반 맞춤 식단</span>
+      <h1>
+        <span class="italic">매일의 한 끼가</span>
+        <span>아이의 내일을 만듭니다</span>
+      </h1>
+      <p>마트 전단지 사진이나 재료를 알려주시면 AI가 우리 아이 맞춤 주간 식단을 완성해드립니다</p>
+      <div class="scroll-indicator">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="card main-input-card animate-fadeInUp stagger-1">
+      <div class="tab-container">
+        <button class="tab-btn active" data-tab="photo">📷 전단지 사진 업로드</button>
+        <button class="tab-btn" data-tab="text">✍️ 재료 직접 입력</button>
+      </div>
+
+      <div id="photoInput" class="tab-content">
+        <div class="upload-area" id="dropZone">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="var(--brand-sage)"><path d="M4,4H7L9,2H15L17,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z"/></svg>
+          <p style="margin-top: 16px;">전단지 사진을 드래그하거나 클릭하세요</p>
+          <p style="font-size: 0.8rem; color: var(--brand-stone);">JPG, PNG, HEIC 지원</p>
+          <input type="file" id="fileInput" hidden accept="image/*">
+          <img id="previewImg" class="preview-img">
+        </div>
+      </div>
+
+      <div id="textInput" class="tab-content" style="display: none;">
+        <textarea id="ingredientsText" class="input-field" placeholder="예시) 소고기 500g, 당근 2개, 브로콜리 1개, 두부 1모, 애호박 1개..."></textarea>
+      </div>
+
+      <div style="margin-top: 24px;">
+        <details>
+          <summary style="cursor: pointer; color: var(--brand-sage); font-weight: 500;">추가 정보 입력 (선택)</summary>
+          <div style="padding-top: 16px; display: grid; gap: 16px;">
+            <input type="number" id="babyAge" class="input-field" placeholder="아이 나이 (개월)">
+            <input type="text" id="allergies" class="input-field" placeholder="알레르기/기피 식품">
+          </div>
+        </details>
+      </div>
+
+      <button id="generateBtn" class="btn-cta" style="margin-top: 32px;">🍀 식단 만들기</button>
+      <p style="text-align: center; font-size: 0.85rem; color: var(--brand-stone); margin-top: 12px;">보통 10~20초 소요됩니다</p>
+    </div>
+
+    <section class="features">
+      <h2>한 번의 입력으로 모든 것이 준비됩니다</h2>
+      <div class="features-grid">
+        <div class="card card-hover">
+          <div style="font-size: 2rem; margin-bottom: 12px;">📅</div>
+          <h4>주간 식단표</h4>
+          <p>7일 맞춤 식단을 한눈에</p>
+        </div>
+        <div class="card card-hover">
+          <div style="font-size: 2rem; margin-bottom: 12px;">🛒</div>
+          <h4>장보기 리스트</h4>
+          <p>필요한 재료를 자동으로 정리</p>
+        </div>
+        <div class="card card-hover">
+          <div style="font-size: 2rem; margin-bottom: 12px;">👨‍🍳</div>
+          <h4>레시피 가이드</h4>
+          <p>단계별 조리법과 밀프랩 타이밍</p>
+        </div>
+        <div class="card card-hover">
+          <div style="font-size: 2rem; margin-bottom: 12px;">📊</div>
+          <h4>영양 분석</h4>
+          <p>WHO 기준 영양 밸런스 체크</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>오늘의 이유식 © 2026 · MEAL OS</p>
+  </footer>
+
+  <div id="settingsModal" class="modal">
+    <div class="modal-content">
+      <h3>Gemini API 키 설정</h3>
+      <input type="password" id="apiKeyInput" class="input-field" style="margin: 20px 0;" placeholder="API 키를 입력하세요">
+      <button id="saveApiKeyBtn" class="btn-primary" style="width: 100%;">저장</button>
+    </div>
+  </div>
+
+  <script src="assets/js/storage.js"></script>
+  <script>
+    // Tab switching logic
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('photoInput').style.display = btn.dataset.tab === 'photo' ? 'block' : 'none';
+        document.getElementById('textInput').style.display = btn.dataset.tab === 'text' ? 'block' : 'none';
+      });
+    });
+
+    // File upload logic
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const previewImg = document.getElementById('previewImg');
+    let base64Image = null;
+
+    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+    function handleFile(file) {
+      if (!file || !file.type.startsWith('image/')) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        base64Image = e.target.result;
+        previewImg.src = base64Image;
+        previewImg.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Modal logic
+    const settingsBtn = document.getElementById('settingsBtn');
+    const modal = document.getElementById('settingsModal');
+    const apiKeyInput = document.getElementById('apiKeyInput');
+    
+    settingsBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.style.display = 'flex';
+      const savedKey = Storage.getApiKey();
+      if (savedKey) apiKeyInput.value = savedKey;
+    });
+
+    document.getElementById('saveApiKeyBtn').addEventListener('click', () => {
+      Storage.saveApiKey(apiKeyInput.value);
+      modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+
+    // Generate logic
+    document.getElementById('generateBtn').addEventListener('click', () => {
+      const text = document.getElementById('ingredientsText').value;
+      const age = document.getElementById('babyAge').value;
+      const allergies = document.getElementById('allergies').value;
+      
+      let promptText = text;
+      if (age || allergies) {
+        promptText += `\n(추가 정보 - 나이: ${age}개월, 알레르기/기피: ${allergies})`;
+      }
+
+      Storage.saveInputData({
+        text: promptText,
+        imageBase64: base64Image
+      });
+
+      if (!Storage.getApiKey()) {
+        modal.style.display = 'flex';
+        return;
+      }
+
+      window.location.href = 'result.html';
+    });
+  </script>
+</body>
+</html>

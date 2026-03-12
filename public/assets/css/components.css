@@ -1,0 +1,114 @@
+/* Buttons */
+.btn-primary {
+  background: var(--brand-sage);
+  color: white;
+  border-radius: 12px;
+  padding: 14px 32px;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: all var(--transition-normal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary:hover {
+  background: var(--brand-leaf);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-cta {
+  background: var(--brand-amber);
+  color: white;
+  border-radius: 12px;
+  padding: 18px 48px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: var(--shadow-cta);
+  transition: all var(--transition-normal);
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-cta:hover {
+  filter: brightness(1.08);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(231,111,81,0.45);
+}
+
+.btn-cta:active {
+  transform: scale(0.96);
+}
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: var(--shadow-md);
+  padding: 24px;
+  transition: var(--transition-spring);
+}
+
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Inputs */
+.input-field {
+  width: 100%;
+  border: 2px solid var(--brand-mint);
+  border-radius: 16px;
+  padding: 20px;
+  font-size: 1rem;
+  transition: var(--transition-fast);
+  background: white;
+}
+
+.input-field:focus {
+  border-color: var(--brand-sage);
+  box-shadow: 0 0 0 4px rgba(64,145,108,0.15);
+}
+
+textarea.input-field {
+  resize: vertical;
+  min-height: 160px;
+}
+
+/* Tabs */
+.tab-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.tab-btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 500;
+  color: var(--brand-stone);
+  transition: var(--transition-fast);
+}
+
+.tab-btn.active {
+  background: var(--brand-forest);
+  color: white;
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.badge-gold { background: var(--brand-gold); color: var(--brand-forest); }
+.badge-sage { background: var(--brand-sage); color: white; }
+.badge-ocean { background: var(--brand-ocean); color: white; }
+.badge-amber { background: var(--brand-amber); color: white; }
+.badge-lavender { background: var(--brand-lavender); color: white; }

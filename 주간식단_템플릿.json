@@ -1,0 +1,281 @@
+{
+  "_meta": {
+    "version": "2.3",
+    "week": "2026-W00",
+    "period_start": "YYYY-MM-DD(토)",
+    "period_end": "YYYY-MM-DD(금)",
+    "created_at": "YYYY-MM-DD",
+    "status": "draft"
+  },
+
+  "child_meals": [
+    {
+      "day": "월", "meal": "저녁",
+      "main_protein": "소고기①",
+      "menu": "",
+      "version_used": "A",
+      "portions": { "child_g": 50, "adult1_g": 175, "adult2_g": 175 },
+      "sides": {
+        "leaf": "",
+        "stick": "",
+        "other": ""
+      },
+      "thaw_trigger": "일 22:00 냉장 이동",
+      "baby_cube": false,
+      "rating": null,
+      "leftover": null,
+      "notes": ""
+    },
+    {
+      "day": "화", "meal": "저녁",
+      "main_protein": "나또",
+      "menu": "나또비빔밥 (F02)",
+      "version_used": null,
+      "portions": { "child_g": null, "adult1_g": null, "adult2_g": null },
+      "sides": {
+        "leaf": "채소볶음 큐브 (반찬 대체)",
+        "stick": null,
+        "other": null
+      },
+      "thaw_trigger": "해동 불필요 (실온 보관)",
+      "baby_cube": false,
+      "rating": null,
+      "leftover": null,
+      "notes": "나또 + 간장0.5T + 참기름 (어른용)"
+    },
+    {
+      "day": "수", "meal": "저녁",
+      "main_protein": "소고기②",
+      "menu": "",
+      "version_used": "A",
+      "portions": { "child_g": 50, "adult1_g": 175, "adult2_g": 175 },
+      "sides": {
+        "leaf": "",
+        "stick": "",
+        "other": ""
+      },
+      "thaw_trigger": "화 22:00 냉장 이동",
+      "baby_cube": false,
+      "rating": null,
+      "leftover": null,
+      "notes": ""
+    },
+    {
+      "day": "목", "meal": "저녁",
+      "main_protein": "생선①",
+      "menu": "",
+      "fish_species": "",
+      "version_used": "A",
+      "portions": { "child_g": 50, "adult1_g": 175, "adult2_g": 175 },
+      "sides": {
+        "leaf": "",
+        "stick": "",
+        "other": ""
+      },
+      "thaw_trigger": "수 22:00 냉장 이동",
+      "baby_cube": false,
+      "rating": null,
+      "leftover": null,
+      "notes": ""
+    },
+    {
+      "day": "금", "meal": "저녁",
+      "main_protein": "기타단백질①",
+      "protein_type": "",
+      "menu": "",
+      "version_used": "A",
+      "portions": { "child_g": 50, "adult1_g": 175, "adult2_g": 175 },
+      "sides": {
+        "leaf": "",
+        "stick": "",
+        "other": ""
+      },
+      "thaw_trigger": "목 22:00 냉장 이동",
+      "baby_cube": false,
+      "rating": null,
+      "leftover": null,
+      "notes": ""
+    },
+    {
+      "day": "토", "meal": "점심",
+      "main_protein": "소고기③",
+      "menu": "",
+      "version_used": "A",
+      "portions": { "child_g": 50, "adult1_g": 175, "adult2_g": 175 },
+      "sides": {
+        "leaf": "",
+        "stick": "",
+        "other": ""
+      },
+      "thaw_trigger": "금 22:00 냉장 이동",
+      "baby_cube": false,
+      "rating": null,
+      "leftover": null,
+      "notes": ""
+    },
+    {
+      "day": "토", "meal": "저녁",
+      "main_protein": "기타단백질②",
+      "protein_type": "",
+      "menu": "",
+      "version_used": "A",
+      "portions": { "child_g": 50, "adult1_g": 175, "adult2_g": 175 },
+      "sides": {
+        "leaf": "",
+        "stick": "",
+        "other": ""
+      },
+      "thaw_trigger": "토 08:00 냉장 이동",
+      "baby_cube": false,
+      "rating": null,
+      "leftover": null,
+      "notes": ""
+    },
+    {
+      "day": "일", "meal": "점심",
+      "main_protein": "생선②",
+      "menu": "",
+      "fish_species": "",
+      "version_used": "A",
+      "portions": { "child_g": 50, "adult1_g": 175, "adult2_g": 175 },
+      "sides": {
+        "leaf": "",
+        "stick": "",
+        "other": ""
+      },
+      "thaw_trigger": "토 22:00 냉장 이동",
+      "baby_cube": false,
+      "rating": null,
+      "leftover": null,
+      "notes": ""
+    },
+    {
+      "day": "일", "meal": "저녁",
+      "main_protein": "라구",
+      "menu": "소고기 라구소스 (F01)",
+      "version_used": null,
+      "portions": { "child_g": 50, "adult1_g": 175, "adult2_g": 175 },
+      "sides": {
+        "leaf": "",
+        "stick": "",
+        "other": ""
+      },
+      "thaw_trigger": "일 08:00 냉장 이동",
+      "baby_cube": false,
+      "rating": null,
+      "leftover": null,
+      "notes": "어른: 소금+후추+파마산치즈 추가"
+    }
+  ],
+
+  "adult_lunch": {
+    "pattern": "월화+수목금",
+    "menu_a": {
+      "name": "",
+      "days": ["월", "화"],
+      "cook_when": "일요일 밤 or 월요일 아침",
+      "qty": "4인분",
+      "rating": null
+    },
+    "menu_b": {
+      "name": "",
+      "days": ["수", "목", "금"],
+      "cook_when": "수요일 아침 (아이 반찬 동시 조리)",
+      "qty": "4인분",
+      "rating": null
+    }
+  },
+
+  "milprep_schedule": {
+    "saturday": {
+      "items": [
+        { "name": "채수+볶음베이스", "qty_g": null, "note": "공통 기반 먼저" },
+        { "name": "소고기 밀프랩①", "menu": "", "qty_g": 800, "note": "2배수" },
+        { "name": "소고기 밀프랩②", "menu": "", "qty_g": 800, "note": "2배수" },
+        { "name": "소고기 밀프랩③", "menu": "", "qty_g": 800, "note": "2배수" },
+        { "name": "라구 소스 (F01)", "menu": "소고기 라구", "qty_g": 800, "note": "2배수" }
+      ]
+    },
+    "sunday": {
+      "items": [
+        { "name": "생선 밀프랩①", "menu": "", "fish_species": "", "qty_g": 800, "note": "2배수" },
+        { "name": "생선 밀프랩②", "menu": "", "fish_species": "", "qty_g": 800, "note": "2배수" },
+        { "name": "기타단백질", "protein_type": "", "menu": "", "qty_g": 800, "note": "2끼×2배수" },
+        { "name": "반찬①", "menu": "", "slot": "leaf", "note": "일·월·화 소진" },
+        { "name": "반찬②", "menu": "", "slot": "other", "note": "일·월·화 소진" },
+        { "name": "반찬③", "menu": "", "slot": "leaf", "note": "일·월·화 소진" },
+        { "name": "반찬④", "menu": "", "slot": "other", "note": "일·월·화 소진" }
+      ]
+    },
+    "wednesday": {
+      "items": [
+        { "name": "반찬①", "menu": "", "slot": "leaf", "note": "수·목·금 소진" },
+        { "name": "반찬②", "menu": "", "slot": "other", "note": "수·목·금 소진, 비가열 1종 포함" },
+        { "name": "반찬③", "menu": "", "slot": "leaf", "note": "수·목·금 소진" },
+        { "name": "반찬④", "menu": "", "slot": "other", "note": "수·목·금 소진" },
+        { "name": "성인 B메뉴", "menu": "", "note": "동시 조리" }
+      ]
+    }
+  },
+
+  "baby_cubes": [
+    { "ingredient": "청경채", "qty_g": 100, "done": false },
+    { "ingredient": "시금치", "qty_g": 30, "done": false },
+    { "ingredient": "애호박", "qty_g": 60, "done": false },
+    { "ingredient": "브로콜리", "qty_g": 50, "done": false },
+    { "ingredient": "소고기 다짐육", "qty_g": 30, "done": false }
+  ],
+
+  "shopping_list": {
+    "beef": [
+      { "item": "소고기 (밀프랩용)", "qty": "약 1.2kg (아이+성인 2배수)", "note": "부위 주차별 결정", "sale": false }
+    ],
+    "fish": [
+      { "item": "순살생선①", "species": "", "qty": "800g", "sale": false },
+      { "item": "순살생선②", "species": "", "qty": "800g", "sale": false }
+    ],
+    "other_protein": [
+      { "item": "", "qty": "800g", "note": "기타단백질 주차별 결정", "sale": false }
+    ],
+    "vegetables": [
+      { "item": "스틱채소 (생물)", "menu": "", "qty": "", "note": "냉동X 매주 생물 구매", "sale": false },
+      { "item": "", "qty": "", "sale": false }
+    ],
+    "adult_lunch": [
+      { "item": "A메뉴 재료", "menu": "", "qty": "", "sale": false },
+      { "item": "B메뉴 재료", "menu": "", "qty": "", "sale": false }
+    ],
+    "pantry": [
+      { "item": "나또", "qty": "3주분", "note": "실온 보관", "sale": false }
+    ]
+  },
+
+  "nutrition_weekly": {
+    "protein_g":   { "target": 105, "estimated": null, "status": null },
+    "iron_mg":     { "target": 56,  "estimated": null, "status": null },
+    "calcium_mg":  { "target": 4900,"estimated": null, "status": null },
+    "zinc_mg":     { "target": 21,  "estimated": null, "status": null },
+    "vitaminA_ug": { "target": 2800,"estimated": null, "status": null },
+    "vitaminC_mg": { "target": 245, "estimated": null, "status": null },
+    "omega3_g":    { "target": 6.3, "estimated": null, "status": null },
+    "note": ""
+  },
+
+  "daycare_log": [
+    { "day": "월", "assessment": null, "note": "" },
+    { "day": "화", "assessment": null, "note": "" },
+    { "day": "수", "assessment": null, "note": "" },
+    { "day": "목", "assessment": null, "note": "" },
+    { "day": "금", "assessment": null, "note": "" }
+  ],
+
+  "smart_backup_triggered": [],
+
+  "weekly_review": {
+    "completed_at": null,
+    "overall_rating": null,
+    "excluded_next_4weeks": [],
+    "carryover_frozen": [],
+    "notes": ""
+  }
+}

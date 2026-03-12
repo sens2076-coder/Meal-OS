@@ -1,0 +1,31 @@
+:root {
+  /* Brand Color System */
+  --brand-forest:   #1B4332;   /* Primary — 헤더, 메인 타이틀 */
+  --brand-sage:     #40916C;   /* Secondary — 버튼, 강조 */
+  --brand-leaf:     #52B788;   /* Accent — 호버, 뱃지 */
+  --brand-mint:     #D8F3DC;   /* Surface — 카드 배경 */
+  --brand-cream:    #FEFAE0;   /* Background — 페이지 기본 배경 */
+  --brand-paper:    #F7F3E3;   /* Section — 섹션 구분 배경 */
+  --brand-amber:    #E76F51;   /* CTA — 핵심 행동 유도 버튼 */
+  --brand-gold:     #F4A261;   /* Highlight — 서브 강조 */
+  --brand-ocean:    #1A374D;   /* Dark — 푸터, 다크 섹션 */
+  --brand-lavender: #7B5EA7;   /* Baby — 이유식, 둘째 관련 */
+  --brand-white:    #FFFFFF;
+  --brand-dark:     #2D2D2D;
+  --brand-stone:    #6B7280;
+
+  /* Typography */
+  --font-main: 'Noto Sans KR', sans-serif;
+  --font-brand: 'Playfair Display', serif;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 12px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.07);
+  --shadow-lg: 0 8px 48px rgba(0,0,0,0.12);
+  --shadow-cta: 0 4px 20px rgba(231,111,81,0.35);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.25s ease;
+  --transition-spring: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}

@@ -1,6 +1,6 @@
 const SYSTEM_PROMPT = `너는 영유아 맞춤 식단 전문가 AI야.
 사용자가 마트 전단지 이미지나 재료 텍스트를 입력하면
-아래 JSON 형식으로만 응답해야 해. 설명 없이 순수 JSON만 출력.
+아래 JSON 형식으로만 응답해야 해. 설명 없이 순수 JSON만 출력해.
 
 응답 JSON 구조:
 {
@@ -49,14 +49,15 @@ async function generateMealPlan(inputText, imageBase64 = null) {
     throw new Error('API_KEY_MISSING');
   }
 
-  const parts = [];
+  // 시스템 프롬프트를 텍스트 파트의 처음에 추가하여 호환성 확보
+  const combinedPrompt = `${SYSTEM_PROMPT}\n\n위 지침에 따라 다음 내용을 분석하여 JSON으로만 응답해줘:\n${inputText || "첨부된 전단지 분석"}`;
+  
+  const parts = [{ text: combinedPrompt }];
+  
   if (imageBase64) {
-    // base64에서 메타데이터 제거 (data:image/jpeg;base64, 부분)
     const cleanBase64 = imageBase64.split(',')[1] || imageBase64;
     parts.push({ inline_data: { mime_type: "image/jpeg", data: cleanBase64 } });
   }
-  
-  parts.push({ text: inputText || "첨부된 전단지를 분석해서 식단을 만들어줘." });
 
   try {
     const response = await fetch(
@@ -66,11 +67,9 @@ async function generateMealPlan(inputText, imageBase64 = null) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts }],
-          systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
           generationConfig: { 
             temperature: 0.7, 
-            maxOutputTokens: 8192,
-            response_mime_type: "application/json" 
+            maxOutputTokens: 8192
           }
         })
       }
@@ -82,10 +81,17 @@ async function generateMealPlan(inputText, imageBase64 = null) {
     }
 
     const data = await response.json();
-    const raw = data.candidates[0].content.parts[0].text;
+    let raw = data.candidates[0].content.parts[0].text;
+    
+    // 마크다운 코드 블록 제거 로직 (```json ... ```)
+    raw = raw.replace(/```json/g, '').replace(/```/g, '').trim();
+    
     return JSON.parse(raw);
   } catch (error) {
     console.error('Gemini API Error:', error);
+    if (error instanceof SyntaxError) {
+      throw new Error('응답 데이터 형식이 올바르지 않습니다. 다시 시도해 주세요.');
+    }
     throw error;
   }
 }

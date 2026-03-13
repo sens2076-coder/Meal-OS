@@ -49,9 +49,7 @@ async function generateMealPlan(inputText, imageBase64 = null) {
     throw new Error('API_KEY_MISSING');
   }
 
-  // 시스템 프롬프트를 텍스트 파트의 처음에 추가하여 호환성 확보
   const combinedPrompt = `${SYSTEM_PROMPT}\n\n위 지침에 따라 다음 내용을 분석하여 JSON으로만 응답해줘:\n${inputText || "첨부된 전단지 분석"}`;
-  
   const parts = [{ text: combinedPrompt }];
   
   if (imageBase64) {
@@ -59,39 +57,53 @@ async function generateMealPlan(inputText, imageBase64 = null) {
     parts.push({ inline_data: { mime_type: "image/jpeg", data: cleanBase64 } });
   }
 
-  try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts }],
-          generationConfig: { 
-            temperature: 0.7, 
-            maxOutputTokens: 8192
-          }
-        })
+  // 시도할 모델 목록 (우선순위 순)
+  const models = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-1.5-pro'];
+  let lastError = null;
+
+  for (const modelId of models) {
+    try {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts }],
+            generationConfig: { 
+              temperature: 0.7, 
+              maxOutputTokens: 8192
+            }
+          })
+        }
+      );
+
+      if (!response.ok) {
+        const errData = await response.json();
+        const errMsg = errData.error?.message || 'API 호출 실패';
+        
+        // 모델을 찾을 수 없는 경우 다음 모델로 시도
+        if (errMsg.toLowerCase().includes('not found')) {
+          console.warn(`Model ${modelId} not found, trying next...`);
+          continue;
+        }
+        
+        throw new Error(errMsg);
       }
-    );
 
-    if (!response.ok) {
-      const errData = await response.json();
-      throw new Error(errData.error?.message || 'API 호출 실패');
+      const data = await response.json();
+      let raw = data.candidates[0].content.parts[0].text;
+      raw = raw.replace(/```json/g, '').replace(/```/g, '').trim();
+      
+      return JSON.parse(raw);
+    } catch (error) {
+      lastError = error;
+      // 모델 없음 오류가 아니면 즉시 중단 (할당량 초과 등은 다른 모델도 마찬가지일 가능성이 큼)
+      if (!error.message.toLowerCase().includes('not found')) {
+        break;
+      }
     }
-
-    const data = await response.json();
-    let raw = data.candidates[0].content.parts[0].text;
-    
-    // 마크다운 코드 블록 제거 로직 (```json ... ```)
-    raw = raw.replace(/```json/g, '').replace(/```/g, '').trim();
-    
-    return JSON.parse(raw);
-  } catch (error) {
-    console.error('Gemini API Error:', error);
-    if (error instanceof SyntaxError) {
-      throw new Error('응답 데이터 형식이 올바르지 않습니다. 다시 시도해 주세요.');
-    }
-    throw error;
   }
+
+  throw lastError || new Error('식단을 생성할 수 있는 모델을 찾지 못했습니다.');
 }

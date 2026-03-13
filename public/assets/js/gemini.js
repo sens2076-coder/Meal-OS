@@ -47,7 +47,8 @@ async function generateMealPlan(inputText, imageBase64 = null) {
   const apiKey = Storage.getApiKey();
   if (!apiKey) throw new Error('API_KEY_MISSING');
 
-  const combinedPrompt = `${SYSTEM_PROMPT}\n\n분석 대상:\n${inputText || "첨부된 이미지 분석"}`;
+  const combinedPrompt = `${SYSTEM_PROMPT}\n\n분석할 내용:\n${inputText || "첨부된 전단지 이미지"}`;
+  
   const contents = [{
     parts: [{ text: combinedPrompt }]
   }];
@@ -59,53 +60,43 @@ async function generateMealPlan(inputText, imageBase64 = null) {
     });
   }
 
-  // 가장 안정적인 모델 목록
-  const models = ['gemini-1.5-flash', 'gemini-1.5-pro'];
-  let lastError = null;
-
-  for (const modelId of models) {
-    try {
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1/models/${modelId}:generateContent?key=${apiKey}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents })
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        const msg = data.error?.message || 'API Error';
-        if (msg.includes('quota') || msg.includes('limit') || msg.includes('not found')) {
-          lastError = new Error(msg);
-          continue; // 다음 모델로 시도
-        }
-        throw new Error(msg);
+  try {
+    // v1beta 버전과 gemini-1.5-flash 모델의 조합이 가장 안정적입니다.
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents })
       }
+    );
 
-      if (!data.candidates || !data.candidates[0]) throw new Error('응답 데이터 없음');
+    const data = await response.json();
+
+    if (!response.ok) {
+      const msg = data.error?.message || 'API 호출 실패';
       
-      let raw = data.candidates[0].content.parts[0].text;
-      raw = raw.replace(/```json/g, '').replace(/```/g, '').trim();
-      return JSON.parse(raw);
-    } catch (e) {
-      lastError = e;
-      if (!e.message.includes('quota') && !e.message.includes('limit')) break;
+      // 할당량(limit: 0) 오류 발생 시 상세 안내
+      if (msg.toLowerCase().includes('limit') || msg.toLowerCase().includes('quota')) {
+        throw new Error(`
+          [할당량 오류] 현재 API 키의 사용 한도가 0입니다.
+          해결 방법:
+          1. aistudio.google.com 에 접속하여 로그아웃 후 다시 로그인해 보세요.
+          2. 새로운 프로젝트를 생성하여 '새 API 키'를 발급받으세요.
+          3. 혹은 텍스트로만(이미지 없이) 식단을 만들어 보세요.
+        `);
+      }
+      throw new Error(msg);
     }
-  }
 
-  // 할당량 오류(limit: 0)에 대한 특수 처리
-  if (lastError?.message.includes('limit') || lastError?.message.includes('quota')) {
-    throw new Error(`
-      API 할당량 초과 (한도 0). 
-      조치 방법: 
-      1. Google AI Studio(aistudio.google.com)에서 새로운 API 키를 발급받으세요.
-      2. 'Pay-as-you-go'가 아닌 무료 티어가 정상 활성화되었는지 확인하세요.
-      3. 이미지를 제외하고 텍스트로만 시도해 보세요.
-    `);
+    if (!data.candidates || !data.candidates[0]) throw new Error('AI 응답이 생성되지 않았습니다.');
+    
+    let raw = data.candidates[0].content.parts[0].text;
+    raw = raw.replace(/```json/g, '').replace(/```/g, '').trim();
+    
+    return JSON.parse(raw);
+  } catch (error) {
+    console.error('Gemini API Error:', error);
+    throw error;
   }
-
-  throw lastError;
 }

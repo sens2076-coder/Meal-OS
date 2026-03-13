@@ -57,12 +57,20 @@ async function generateMealPlan(inputText, imageBase64 = null) {
     parts.push({ inline_data: { mime_type: "image/jpeg", data: cleanBase64 } });
   }
 
-  // 시도할 모델 목록 (우선순위 순)
-  const models = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-1.5-pro'];
+  // 시도할 모델 목록 (안정성 높은 순서)
+  const models = [
+    'gemini-1.5-flash', 
+    'gemini-1.5-flash-8b', 
+    'gemini-1.5-pro',
+    'gemini-2.0-flash-exp',
+    'gemini-2.0-flash'
+  ];
+  
   let lastError = null;
 
   for (const modelId of models) {
     try {
+      console.log(`Trying model: ${modelId}...`);
       const response = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${apiKey}`,
         {
@@ -78,32 +86,44 @@ async function generateMealPlan(inputText, imageBase64 = null) {
         }
       );
 
+      const errData = await response.json();
+
       if (!response.ok) {
-        const errData = await response.json();
         const errMsg = errData.error?.message || 'API 호출 실패';
+        console.warn(`Model ${modelId} failed: ${errMsg}`);
         
-        // 모델을 찾을 수 없는 경우 다음 모델로 시도
-        if (errMsg.toLowerCase().includes('not found')) {
-          console.warn(`Model ${modelId} not found, trying next...`);
+        // 모델을 찾을 수 없거나(not found) 할당량 문제(quota/limit)가 있으면 다음 모델 시도
+        if (errMsg.toLowerCase().includes('not found') || 
+            errMsg.toLowerCase().includes('quota') || 
+            errMsg.toLowerCase().includes('limit')) {
+          lastError = new Error(errMsg);
           continue;
         }
         
         throw new Error(errMsg);
       }
 
-      const data = await response.json();
+      const data = errData; // 위에서 이미 json()을 호출함
+      if (!data.candidates || !data.candidates[0]) {
+        throw new Error('응답 데이터를 생성하지 못했습니다.');
+      }
+
       let raw = data.candidates[0].content.parts[0].text;
       raw = raw.replace(/```json/g, '').replace(/```/g, '').trim();
       
       return JSON.parse(raw);
     } catch (error) {
+      console.error(`Error with ${modelId}:`, error);
       lastError = error;
-      // 모델 없음 오류가 아니면 즉시 중단 (할당량 초과 등은 다른 모델도 마찬가지일 가능성이 큼)
-      if (!error.message.toLowerCase().includes('not found')) {
+      // 모델 없음이나 할당량 오류가 아니면 즉시 중단
+      if (!error.message.toLowerCase().includes('not found') && 
+          !error.message.toLowerCase().includes('quota') && 
+          !error.message.toLowerCase().includes('limit')) {
         break;
       }
     }
   }
 
-  throw lastError || new Error('식단을 생성할 수 있는 모델을 찾지 못했습니다.');
+  // 모든 모델이 실패한 경우
+  throw new Error(`식단 생성 실패: ${lastError?.message || '지원되는 모델을 찾을 수 없습니다.'}\n\n도움말: API 키가 Google AI Studio에서 정상적으로 활성화되었는지, 혹은 무료 할당량이 남아있는지 확인해 주세요.`);
 }

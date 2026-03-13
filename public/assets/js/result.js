@@ -32,11 +32,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderResult(result);
   } catch (error) {
     clearInterval(msgInterval);
+    console.error('Detailed Error:', error);
     loadingOverlay.innerHTML = `
-      <div class="card" style="text-align: center;">
-        <h3>오류가 발생했습니다</h3>
-        <p>${error.message === 'API_KEY_MISSING' ? 'API 키를 설정해주세요.' : '결과를 가져오는 중 오류가 발생했습니다.'}</p>
-        <button class="btn-primary" onclick="window.location.href='index.html'" style="margin-top: 20px;">돌아가기</button>
+      <div class="card" style="text-align: center; max-width: 500px; margin: 0 auto;">
+        <h3 style="color: #e63946;">오류가 발생했습니다</h3>
+        <p style="margin: 15px 0; text-align: left; background: #f8f9fa; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 0.9rem;">
+          ${error.message === 'API_KEY_MISSING' ? 'API 키를 설정해주세요.' : '에러 메시지: ' + error.message}
+        </p>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <button class="btn-primary" onclick="window.location.href='index.html'">돌아가기</button>
+          <button class="btn-cta" onclick="window.location.reload()">다시 시도</button>
+        </div>
       </div>
     `;
   }

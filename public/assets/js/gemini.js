@@ -44,26 +44,42 @@ const SYSTEM_PROMPT = `너는 영유아 맞춤 식단 전문가 AI야.
 }`;
 
 async function generateMealPlan(inputText, imageBase64 = null) {
-  const apiKey = Storage.getApiKey();
+  let apiKey = Storage.getApiKey();
   if (!apiKey) throw new Error('API_KEY_MISSING');
+  apiKey = apiKey.trim(); // 공백 제거
 
   const combinedPrompt = `${SYSTEM_PROMPT}\n\n분석할 내용:\n${inputText || "첨부된 전단지 이미지"}`;
-  
-  const contents = [{
-    parts: [{ text: combinedPrompt }]
-  }];
+  const contents = [{ parts: [{ text: combinedPrompt }] }];
   
   if (imageBase64) {
     const cleanBase64 = imageBase64.split(',')[1] || imageBase64;
-    contents[0].parts.push({
-      inline_data: { mime_type: "image/jpeg", data: cleanBase64 }
-    });
+    contents[0].parts.push({ inline_data: { mime_type: "image/jpeg", data: cleanBase64 } });
   }
 
+  // 1. 사용 가능한 모델 목록 조회 시도
+  let targetModel = 'gemini-1.5-flash'; // 기본값
   try {
-    // v1beta 버전과 gemini-1.5-flash 모델의 조합이 가장 안정적입니다.
+    const listResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
+    if (listResponse.ok) {
+      const listData = await listResponse.json();
+      // generateContent를 지원하는 가장 적합한 모델 찾기
+      const found = listData.models?.find(m => 
+        m.supportedGenerationMethods.includes('generateContent') && 
+        (m.name.includes('gemini-1.5-flash') || m.name.includes('gemini-2.0-flash'))
+      );
+      if (found) {
+        targetModel = found.name.split('/').pop();
+        console.log(`Auto-discovered model: ${targetModel}`);
+      }
+    }
+  } catch (e) {
+    console.warn('Model discovery failed, using default.');
+  }
+
+  // 2. 식단 생성 요청
+  try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${targetModel}:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -75,21 +91,13 @@ async function generateMealPlan(inputText, imageBase64 = null) {
 
     if (!response.ok) {
       const msg = data.error?.message || 'API 호출 실패';
-      
-      // 할당량(limit: 0) 오류 발생 시 상세 안내
       if (msg.toLowerCase().includes('limit') || msg.toLowerCase().includes('quota')) {
-        throw new Error(`
-          [할당량 오류] 현재 API 키의 사용 한도가 0입니다.
-          해결 방법:
-          1. aistudio.google.com 에 접속하여 로그아웃 후 다시 로그인해 보세요.
-          2. 새로운 프로젝트를 생성하여 '새 API 키'를 발급받으세요.
-          3. 혹은 텍스트로만(이미지 없이) 식단을 만들어 보세요.
-        `);
+        throw new Error(`[할당량 오류] 사용 한도가 없습니다. 새로운 API 키가 필요합니다.`);
       }
       throw new Error(msg);
     }
 
-    if (!data.candidates || !data.candidates[0]) throw new Error('AI 응답이 생성되지 않았습니다.');
+    if (!data.candidates || !data.candidates[0]) throw new Error('AI 응답 생성 실패');
     
     let raw = data.candidates[0].content.parts[0].text;
     raw = raw.replace(/```json/g, '').replace(/```/g, '').trim();

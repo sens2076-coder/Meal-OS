@@ -128,15 +128,11 @@ function renderRecipes(recipes) {
     <div class="card recipe-card">
       <h3>${r.name}</h3>
       <div class="tags">${r.tags.map(t => `<span class="badge badge-sage">${t}</span>`).join('')}</div>
-      <div class="recipe-grid">
-        <div>
-          <h5>아이 분량</h5>
-          <ul>${r.ingredients_child.map(i => `<li>${i}</li>`).join('')}</ul>
-        </div>
-        <div>
-          <h5>어른 분량</h5>
-          <ul>${r.ingredients_adult.map(i => `<li>${i}</li>`).join('')}</ul>
-        </div>
+      <div style="margin: 16px 0;">
+        <h5>재료 준비</h5>
+        <ul style="column-count: 2; gap: 20px;">
+          ${r.ingredients.map(i => `<li>${i}</li>`).join('')}
+        </ul>
       </div>
       <div class="steps">
         <h5>조리 단계</h5>
@@ -144,6 +140,9 @@ function renderRecipes(recipes) {
       </div>
       <div class="cube-tip">
         <strong>🍼 큐브 팁:</strong> ${r.baby_cube_tip}
+      </div>
+      <div style="margin-top: 12px; font-size: 0.85rem; color: var(--brand-stone);">
+        📅 보관: ${r.storage}
       </div>
     </div>
   `).join('');

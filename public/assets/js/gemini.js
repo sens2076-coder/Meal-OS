@@ -46,7 +46,7 @@ const SYSTEM_PROMPT = `너는 영유아 맞춤 식단 전문가 AI야.
 async function generateMealPlan(inputText, imageBase64 = null) {
   let apiKey = Storage.getApiKey();
   if (!apiKey) throw new Error('API_KEY_MISSING');
-  apiKey = apiKey.trim(); // 공백 제거
+  apiKey = apiKey.trim();
 
   const combinedPrompt = `${SYSTEM_PROMPT}\n\n분석할 내용:\n${inputText || "첨부된 전단지 이미지"}`;
   const contents = [{ parts: [{ text: combinedPrompt }] }];
@@ -56,21 +56,37 @@ async function generateMealPlan(inputText, imageBase64 = null) {
     contents[0].parts.push({ inline_data: { mime_type: "image/jpeg", data: cleanBase64 } });
   }
 
-  // 1. 사용 가능한 모델 목록 조회 시도
-  let targetModel = 'gemini-1.5-flash'; // 기본값
+  // 1. 할당량이 확인된 최신 모델 목록 (2026년 기준)
+  const preferredModels = [
+    'gemini-3.1-flash-lite',
+    'gemini-2.5-flash',
+    'gemini-1.5-flash'
+  ];
+
+  let targetModel = preferredModels[0];
+
+  // 자동 탐색 로직 강화
   try {
     const listResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
     if (listResponse.ok) {
       const listData = await listResponse.json();
-      // generateContent를 지원하는 가장 적합한 모델 찾기
-      const found = listData.models?.find(m => 
-        m.supportedGenerationMethods.includes('generateContent') && 
-        (m.name.includes('gemini-1.5-flash') || m.name.includes('gemini-2.0-flash'))
+      const availableModels = listData.models || [];
+      
+      // 우선순위 목록에 있는 모델 중 실제 사용 가능한 모델 찾기
+      const found = preferredModels.find(pref => 
+        availableModels.some(m => m.name.endsWith(pref) && m.supportedGenerationMethods.includes('generateContent'))
       );
+      
       if (found) {
-        targetModel = found.name.split('/').pop();
-        console.log(`Auto-discovered model: ${targetModel}`);
+        targetModel = found;
+      } else {
+        // 우선순위에 없더라도 generateContent가 가능한 아무 모델이나 선택
+        const anyFlash = availableModels.find(m => 
+          m.name.includes('flash') && m.supportedGenerationMethods.includes('generateContent')
+        );
+        if (anyFlash) targetModel = anyFlash.name.split('/').pop();
       }
+      console.log(`Selected model: ${targetModel}`);
     }
   } catch (e) {
     console.warn('Model discovery failed, using default.');
@@ -92,7 +108,7 @@ async function generateMealPlan(inputText, imageBase64 = null) {
     if (!response.ok) {
       const msg = data.error?.message || 'API 호출 실패';
       if (msg.toLowerCase().includes('limit') || msg.toLowerCase().includes('quota')) {
-        throw new Error(`[할당량 오류] 사용 한도가 없습니다. 새로운 API 키가 필요합니다.`);
+        throw new Error(`[할당량 오류] ${targetModel} 모델의 한도가 부족합니다. (현재 한도: 0)\n다른 모델로 변경하거나 나중에 다시 시도해 주세요.`);
       }
       throw new Error(msg);
     }
